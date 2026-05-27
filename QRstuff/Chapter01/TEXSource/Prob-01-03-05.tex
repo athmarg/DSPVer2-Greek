@@ -1,0 +1,1019 @@
+\makeatletter
+\renewcommand{\PackageInfo}[2]{} % Remove Package information
+\renewcommand{\@font@info}[1]{}  % Remove Font information
+\renewcommand{\@latex@info}[1]{} % Remove LaTeX information
+\makeatother
+\newcommand{\textlatin}[1]{#1}
+
+\documentclass[a4paper,twoside,10pt,openany]{memoir}
+%%%%%%%%%%% XeLaTex %%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fontspec} %xltextra
+%\usepackage{xgreek}
+\usepackage[nonumeralsign]{xgreek}
+\usepackage{ucharclasses}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings,skins, breakable}
+\usepackage{amssymb} % Don't load it after 'xunicode'! Will produce error!
+\usepackage{amsmath}
+\usepackage{amsfonts} % for mathbb, mathfrak
+%\usepackage[italic,noendash]{mathastext}
+\usepackage{mathrsfs} % For caligraphic like the E of EMF
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{xr}
+\usepackage{listings}
+\usepackage{fontawesome5}
+\usepackage{qrcode}
+%\usepackage{scrextend}
+%\addtokomafont{labelinglabel}{\sffamily}
+
+\setTransitionsForGreek{\setlanguage{monogreek}}{}
+\setTransitionsForLatin{\setlanguage{american}}{}
+%\setmainfont[Mapping=tex-text]{Kerkis}
+
+
+%\usepackage{mathspec} %% loads fontspec also
+%\setmathfont(Digits,Latin,Greek){Minion Pro}
+%\setmainfont{MinionPro-Regular.otf}
+%\setmainfont{Minion Pro}
+%\usepackage{unicode-math}
+\setmainfont[Mapping=tex-text]{Minion Pro}
+\setmainfont{Minion Pro}
+%\setmathfont{Latin Modern Math}
+
+%\setmainfont[Mapping=tex-text,Ligatures=Common]{Garamond}
+%\setsansfont[Mapping=tex-text,Scale=MatchLowercase]{Tahoma}
+%\setmonofont[Scale=MatchLowercase]{Consolas}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{etoolbox}
+%\usepackage [autostyle, english=american]{csquotes}
+\usepackage{textcase}
+\usepackage{ucharclasses}
+%\usepackage{silence}
+\usepackage{color}
+\usepackage[svgnames,x11names]{xcolor}
+%%\WarningFilter*{mdframed}{You got a bad break}
+%\WarningFilter{latex}{Text page}
+%\WarningFilter{pgf}{Your graphic driver}
+\usepackage[usetwoside]{mdframed}
+\usepackage{xparse}
+\def\wlog#1{}
+\DeclareRobustCommand{\GenericInfo}[2]{}
+\usepackage{graphicx}
+\usepackage{systeme}
+\usepackage{wrapfig}
+\usepackage{afterpage}
+\usepackage{tocloft}
+\usepackage[figuresright]{rotating}
+\usepackage{parskip}
+%\WarningFilter*{memoir}{You are using the caption package with the memoir class}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{titletoc}
+\usepackage{calc}
+\usepackage{pstricks}
+\usepackage{bbm}
+\usepackage{newlfont}
+\usepackage{textcomp}
+\usepackage{upgreek}
+\usepackage{ifthen}
+\usepackage{extramarks}
+\usepackage{bm}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{circuits.ee.IEC}
+\usepackage{tocloft}
+\usepackage{lettrine}
+\usepackage{cancel}
+%\usepackage{chemfig}
+%\usepackage[perpage]{footmisc}
+\usepackage{icomma} % icomma (intelligent comma)
+\usepackage{microtype}
+\hbadness=5500
+\hfuzz=6pt
+
+\makeatletter
+\renewenvironment{theindex}
+   {\if@twocolumn
+       \@restonecolfalse
+    \else
+       \@restonecoltrue
+    \fi
+    \setlength{\columnseprule}{0pt}
+    \setlength{\columnsep}{35pt}
+    \begin{multicols}{3}[\chapter*{\indexname}]        %Adjust the 2 for more columns
+    \markboth{\MakeUppercase\indexname}%
+             {\MakeUppercase\indexname}%
+    \thispagestyle{plain}
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{0pt plus 0.3pt}
+    \relax
+    \let\item\@idxitem}%
+   {\end{multicols}\if@restonecol\onecolumn\else\clearpage\fi}
+\makeatother
+\usepackage[a4paper, inner=1.55cm, outer=1.55cm, left=1.57cm, right=1.57cm,
+            top=1.7cm, bottom=1.7cm, headsep=4mm]{geometry}
+
+
+%\usepackage[a4paper, inner=1.55cm, outer=1.55cm, left=1.55cm,
+%            right=1.55cm, top=1.58cm, bottom=1.58cm, headsep=4mm]{geometry}
+
+
+\usepackage{makeidx}
+\makeindex
+
+
+\def\baseColor{\special{color Violet}}
+\def\Cyan{\special{color cmyk 1. 0 0 0}}
+\def\blackink{\special{color cmyk 0 0 0 1.}}
+\def\whiteink{\special{color cmyk 0 0 0 0}}
+
+\newcounter{codecounter}
+\setcounter{codecounter}{0}
+
+% Ρυθμίσεις για το listings
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{orange}\bfseries,
+    numbersep=2pt,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+}
+
+% Δημιουργία προσαρμοσμένου περιβάλλοντος με tcolorbox
+\newtcblisting{pythoncode}[2][]{
+    listing only,
+    listing options={
+        language=Python,
+        basicstyle=\ttfamily\small,
+        keywordstyle=\color{blue}\bfseries,
+        stringstyle=\color{red},
+        commentstyle=\color{green!50!black}\itshape,
+        numbers=left,
+        numberstyle=\tiny\color{orange}\bfseries,
+        numbersep=2pt,
+        frame=none,
+        aboveskip=10pt,
+        belowskip=10pt,
+    },
+    colback=white,
+    colframe=black,
+    boxrule=0.5pt,
+    arc=4pt,
+    title={Code \thecodecounter: #2}, % Χρήση του μετρητή στη λεζάντα
+    coltitle=black,
+    colbacktitle=yellow!30,
+    fonttitle=\bfseries,
+    top=5pt,
+    bottom=5pt,
+    left=5pt,
+    right=5pt,
+    before={\stepcounter{codecounter}}, % Αύξηση του μετρητή πριν από κάθε κώδικα
+    #1 % Προαιρετικές επιλογές, π.χ. label
+}
+
+%\makeatletter
+%\renewenvironment{theindex}
+%   {\if@twocolumn
+%       \@restonecolfalse
+%    \else
+%       \@restonecoltrue
+%    \fi
+%    \setlength{\columnseprule}{0pt}
+%    \setlength{\columnsep}{35pt}
+%    \begin{multicols}{3}[\chapter*{\indexname}]        %Adjust the 2 for more columns
+%    \markboth{\MakeUppercase\indexname}%
+%             {\MakeUppercase\indexname}%
+%    \thispagestyle{plain}
+%    \setlength{\parindent}{0pt}
+%    \setlength{\parskip}{0pt plus 0.3pt}
+%    \relax
+%    \let\item\@idxitem}%
+%   {\end{multicols}\if@restonecol\onecolumn\else\clearpage\fi}
+%\makeatother
+
+%%%%%%%%%%%%% HISTORY ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{history}[chapter]
+\def\thehistory{\thesection\cyan{.\arabic{history}}\blackink}
+\newenvironment{history}[2][]{\refstepcounter{history}\par\medskip\noindent
+\mdfsetup{
+frametitleaboveskip=-0.5\ht\strutbox,
+frametitlealignment=\raggedright }
+\begin{mdframed}[hidealllines=true,backgroundcolor=black!10,usetwoside=false]
+\cyan\hrulefill\blackink \\
+\colorbox{cyan}{\textbf {\whiteink{\large{ΙΣΤΟΡΙΚΟ ΣΗΜΕΙΩΜΑ}\rule[-6pt]{0ex}{4ex} }\blackink #1}} \smallskip $\quad$ \textbf {#2} \\
+\cyan\hrulefill\blackink
+}{${}$\\\cyan\hrulefill\blackink\end{mdframed}}
+%%%%%%%%%%%%% REMARK ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% REMARK ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{remark}[chapter]
+\def\theremark{\thesection\cyan{.\arabic{remark}}\blackink}
+\newenvironment{remark}[2][]{\refstepcounter{remark}\par\medskip\noindent
+\mdfsetup{
+frametitleaboveskip=-0.5\ht\strutbox,
+frametitlealignment=\raggedright }
+\begin{mdframed}[hidealllines=true,backgroundcolor=black!10,usetwoside=false]
+\cyan\hrulefill\blackink \\
+\colorbox{cyan}{\textbf {\whiteink{\large{ΠΑΡΑΤΗΡΗΣΗ~\theremark}\rule[-6pt]{0ex}{4ex} }\blackink #1}} \smallskip $\quad$ \textbf {#2} \\
+\cyan\hrulefill\blackink
+}{${}$\\\cyan\hrulefill\blackink\end{mdframed}}
+%%%%%%%%%%%%% REMARK ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% DEFINITION ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{definition}[chapter]
+\def\thedefinition{\mple{\thechapter-\arabic{definition}}\blackink}
+\newenvironment{definition}[2][]{\refstepcounter{definition}\par\medskip\noindent
+\mdfsetup{
+frametitleaboveskip=-0.5\ht\strutbox,
+frametitlealignment=\raggedright }
+\begin{mdframed}[hidealllines=true,backgroundcolor=black!10,usetwoside=false]
+\cyan\hrulefill\blackink \\
+\colorbox{cyan}{\textbf {\whiteink{\large{ΟΡΙΣΜΟΣ~\thedefinition}\rule[-6pt]{0ex}{4ex} }\blackink #1}} \smallskip $\quad$ \textbf {\mple{#2}} \\[-4.7pt] % -3.5
+\cyan\hrulefill\blackink
+}{${}$\\\cyan\hrulefill\blackink\end{mdframed}}
+%%%%%%%%%%%%% DEFINITION ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% EXAMPLE ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{example}[chapter]
+\def\theexample{\mple{\thechapter-\arabic{example}}\blackink}
+\newenvironment{example}[2][]{\refstepcounter{example}\par\medskip\noindent
+\mdfsetup{
+frametitleaboveskip=-0.5\ht\strutbox,
+frametitlealignment=\raggedright }
+\begin{mdframed}[hidealllines=true,backgroundcolor=blue!8,usetwoside=false]
+\cyan\hrulefill\blackink \\[1.2pt] % remove this if needed
+\colorbox{cyan}{\textbf {\whiteink{\large{ΠΑΡΑΔΕΙΓΜΑ~\theexample}\rule[-6pt]{0ex}{4ex} }\blackink #1}} \smallskip $\quad$ \textbf {\mple{#2}} \\[-4.7pt] % -3.5
+\cyan\hrulefill\blackink
+}{${}$\\\cyan\hrulefill\blackink\end{mdframed}}
+%\newcounter{example}[chapter]
+\def\theexample{\thechapter-\arabic{example}\blackink}
+\newenvironment{exampleC}[2][]{\refstepcounter{example}\par\medskip\noindent
+\mdfsetup{
+frametitleaboveskip=-0.5\ht\strutbox,
+frametitlealignment=\raggedright }
+\begin{mdframed}[hidealllines=true,backgroundcolor=blue!8,usetwoside=false]
+\cyan\hrulefill\blackink \\[1.2pt] % remove this if needed
+\colorbox{cyan}{\textbf {\whiteink{\large{ΠΑΡΑΔΕΙΓΜΑ ΚΑΤΑΝΟΗΣΗΣ~\theexample}\rule[-6pt]{0ex}{4ex} }\blackink #1}} \smallskip $\quad$ \textbf {\mple{#2}} \\[-4.7pt] % -3.5
+\cyan\hrulefill\blackink
+}{${}$\\\cyan\hrulefill\blackink\end{mdframed}}
+%%%%%%%%%%%%% EXAMPLE ENVIROMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheoremstyle{dotless}{}{}{\itshape}{}{\bfseries}{}{ }{}
+\theoremstyle{dotless}
+\newtheorem {topic}{Άσκηση}[section]
+%\newtheorem {example}{Παράδειγμα}[section]
+\newtheorem {proposition}{Πρόταση}[section]
+\newtheorem {definition1}{Ορισμός}[section]
+\newtheorem {application}{Εφαρμογή}
+%\newtheorem {remark}{Παρατήρηση}[section]
+\newtheorem {theorem}{Θεώρημα}[section]
+%\newtheorem {proof}{Λύση}
+\newtheorem {example1}{Παράδειγμα}[section]
+
+\DeclareMathOperator*{\esssup}{ess\,sup}
+
+%%%%%%%%%%%%%%%%%% Chapter style daleif1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\newlength\dlf@normtxtw
+\setlength\dlf@normtxtw{\textwidth}
+\def\myhelvetfont{\def\rmdefault{mdput}}
+\newsavebox{\feline@chapter}
+\newcommand\feline@chapter@marker[1][4cm]{%
+\sbox\feline@chapter{%
+\resizebox{!}{#1}{\fboxsep=1pt%
+\colorbox{chapterTitleColor}{\color{white}\bfseries\rmfamily\thechapter}%
+}}%
+
+\rotatebox{90}{%
+\resizebox{%
+\heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
+{!}{\color{chapterTitleColor}{\@chapapp}}}\quad%
+\raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+}
+
+\newcommand\feline@chm[1][4cm]{%
+\sbox\feline@chapter{\feline@chapter@marker[#1]}%
+\makebox[0pt][l]{% aka \rlap
+\makebox[0cm][r]{\usebox\feline@chapter}%
+}}
+
+\makechapterstyle{daleif1}{
+\renewcommand\chapnamefont{\Huge\bfseries\color{chapterNameColor}}
+\renewcommand\chaptitlefont{\normalfont\huge\bfseries\color{chapterTitleColor}}
+\renewcommand\chapternamenum{}
+\renewcommand\printchaptername{}
+\renewcommand\printchapternum{\null\hfill\feline@chm[2.3cm]\par}
+\renewcommand\afterchapternum{\par\vskip\midchapskip}
+\renewcommand\printchaptertitle[1]{\chaptitlefont\raggedleft ##1\par}
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%chapter style bluebox %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[scaled=.92]{helvet}
+\newsavebox{\ChpNumBox}
+%\definecolor{ChapBlue}{rgb}{0.00,0.65,0.65}
+\makeatletter
+\newcommand*{\thickhrulefill}{%
+\leavevmode\leaders\hrule height 1\p@ \hfill \kern \z@}
+\newcommand*\BuildChpNum[2]{%
+\begin{tabular}[t]{@{}c@{}}
+\makebox[0pt][l]{#1\strut} \\[.5ex]
+\colorbox{chapterNameColor}{%
+\rule[-5em]{0pt}{0pt}% % chapter number box vertical dimension
+\rule{1ex}{0pt}
+\color{chapterNameColor}#2\strut
+\rule{1ex}{0pt}
+}%
+\end{tabular}}
+\makechapterstyle{BlueBox}{%
+\renewcommand{\chapnamefont}{\LARGE\bfseries\rmfamily\color{chapterNameColor}}
+\renewcommand{\chapnumfont}{\HUGE\bfseries\color{white}}
+\renewcommand{\chaptitlefont}{\raggedright\normalfont\huge\bfseries\color{chapterTitleColor}}
+\setlength{\beforechapskip}{20pt}
+\setlength{\midchapskip}{26pt}
+\setlength{\afterchapskip}{40pt}
+\renewcommand{\printchaptername}{}
+\renewcommand{\chapternamenum}{}
+% print chapter number (for numbered chapters)
+\renewcommand{\printchapternum}{%
+\sbox{\ChpNumBox}{%
+\BuildChpNum{\hspace{-0.8cm}\chapnamefont\@chapapp}%
+{\chapnumfont\thechapter}}}
+% print chapter number (for non numbered chapters)
+\renewcommand{\printchapternonum}{%
+\sbox{\ChpNumBox}{%
+\BuildChpNum{\chapnamefont\vphantom{\@chapapp}}%
+{\chapnumfont\hphantom{\thechapter}}}}
+\renewcommand{\afterchapternum}{}
+% print chapter title
+\renewcommand{\printchaptertitle}[1]{%
+\usebox{\ChpNumBox}\hfill
+\parbox[t]{\hsize-\wd\ChpNumBox-1em}{%
+\vspace{\midchapskip}%
+\thickhrulefill\par
+\chaptitlefont ##1\par}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% chapter style mystyle %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\usetikzlibrary{shadows.blur}
+\makechapterstyle{mystyle}{%
+  \chapterstyle{default}
+  \renewcommand*{\chapnumfont}{\normalfont\Huge\sffamily\bfseries}
+  \renewcommand*{\chaptitlefont}{\normalfont\huge\sffamily\itshape\color{yourcolor}}
+  \settowidth{\chapindent}{\chapnumfont 111}
+  \renewcommand*{\chapterheadstart}{}
+  \renewcommand*{\chapnamefont}{\hfill\color{chapterTitleColor}\normalfont\Huge\sffamily\bfseries}
+  \renewcommand*{\printchapternum}{%
+  \begin{tikzpicture}[baseline={([yshift=-.6ex]current bounding box.center)}]
+  \node[fill=chapterTitleColor,circle,text=white]{\thechapter};
+  \end{tikzpicture}\\[1ex]
+  \hrule height 1.5pt}
+  \renewcommand*{\printchaptertitle}[1]{{\chaptitlefont ##1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%% CHAPTER MINITOC SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\printmyminitoc}[4]{\noindent\hspace{-2cm}
+    \begin{tikzpicture}
+         \node[rounded corners,align=left,fill=#1, blur shadow={shadow blur steps=5}, inner sep=5mm]{
+         \begin{minipage}{14cm}
+         \color{#2}{\bfseries\large Περιεχόμενα Κεφαλαίου\normalfont}\newline
+         \renewcommand\cftsectionfont{\rmfamily\normalsize\color{#3}}
+         \color{#4}
+         \printcontents[chapters]{}{1}{}
+         \renewcommand\cftsectionfont{\rmfamily\normalsize\color{TOCsectionNameColor}}
+         \end{minipage}};
+    \end{tikzpicture}}
+
+\newcommand{\chaptertoc}[4]{
+\setcounter{tocdepth}{1}
+\startcontents[chapters]
+\hspace{3cm}\printmyminitoc{#1}{#2}{#3}{#4}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% CHAPTER MINITOC ZFCBOOK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makechapterstyle{zfcBook}{%
+\setlength\beforechapskip{9\baselineskip}
+\setlength\afterchapskip{7\baselineskip}
+\setlength\midchapskip{1\baselineskip}
+    \renewcommand*{\chaptitlefont}{\normalfont\Huge\bfseries}
+    \renewcommand*{\chapnamefont}{\chaptitlefont}
+    \renewcommand*{\chapnumfont}{\bfseries\fontsize{77}{84}\selectfont}
+        \renewcommand*{\printchaptername}{}
+    \renewcommand*{\chapternamenum}{}
+    \renewcommand*{\printchapternum}{%
+        \begin{adjustwidth}{\marginwidth}{-\marginwidth}
+    \begin{tikzpicture}
+%-------
+\node[name=chapter,
+      rectangle,fill=white,minimum width=\textwidth,minimum height=22mm,
+      copy shadow={shadow xshift=6pt,shadow yshift=-2pt,fill=black}] {~};
+\node[above left] at (chapter.south east) {
+            \ifanappendix\chaptitlefont\@chapapp\fi
+            \chapnumfont\thechapter};
+\node[below right=1mm and 0mm] at (chapter.south west) {\usebox{\bookbox}};
+%-------
+    \end{tikzpicture}
+        \end{adjustwidth}
+                                   }%end od print chapter num
+    \renewcommand*{\printchaptertitle}[1]{
+        \begin{adjustwidth}{\marginwidth}{-\marginwidth}
+    \raggedleft{\chaptitlefont ##1}\par\nobreak%
+        \end{adjustwidth}
+                                        }% end of print chapter title
+                            }% end of zfcBook
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setheadfoot{13.1pt}{\footskip}
+
+\setcounter{MaxMatrixCols}{15} % maximun columns in pmatrix
+
+\chapterstyle{daleif1}
+%\chapterstyle{BlueBox}
+%\chapterstyle{mystyle}
+%\chapterstyle{zfcBook}
+
+\newcommand{\alert}[1]{\underline{\textbf {\textcolor{red}{#1}}}}
+\newcommand{\highlight}[1]{\bm{\textcolor{cyan}{#1}}}
+\newcommand{\hlight}[1]{\bm{\textcolor{magenta}{#1}}}
+\newcommand{\ealert}[1]{\underline{\bm{\textcolor{red}{{#1}}}}}
+\newcommand{\mtext}[1]{\mbox{{#1}}}
+\newcommand{\temper}[1]{$#1^\circ{\mtext{C}}$}
+\newcommand{\itemper}[1]{$#1{\mtext{C}}^\circ$}
+\newcommand{\temperf}[1]{$#1^\circ{\mtext{F}}$}
+\newcommand{\itemperf}[1]{$#1{\mtext{F}}^\circ$}
+\newcommand{\temperk}[1]{$#1{\mtext{ K}}$}
+\newcommand{\tempert}[1]{$T=#1^{\circ}\mtext{C}$}
+\newcommand{\mm}[1]{$#1\mtext{ mm}$}
+\newcommand{\kg}[1]{$#1\mtext{ kg}$}
+\newcommand{\cm}[1]{$#1\mtext{ cm}$}
+\newcommand{\newt}[1]{$#1\mtext{ N}$}
+\newcommand{\cmsqr}[1]{$#1\mtext{ cm}^2$}
+\newcommand{\m}[1]{$#1\mtext{ m}$}
+\newcommand{\msq}[1]{$#1\mtext{ m}^2$}
+\newcommand{\inch}[1]{$#1\mtext{ in.}$}
+\newcommand{\km}[1]{$#1\mtext{ km}$}
+\newcommand{\kpa}[1]{$#1\mtext{ kPa}$}
+\newcommand{\mpa}[1]{$#1\mtext{ MPa}$}
+\newcommand{\kpap}[1]{$p=#1\mtext{ kPa}$}
+\newcommand{\pa}[1]{$#1\mtext{ Pa}$}
+\newcommand{\atm}[1]{$#1\mtext{ atm}$}
+\newcommand{\barp}[1]{$#1\mtext{ bar}$}
+\newcommand{\sect}[1]{$#1\mtext{ s}$}
+\newcommand{\lepta}[1]{$#1\mtext{ min}$}
+\newcommand{\mtt}[1]{\mbox{{\tiny{#1}}}}
+\newcommand{\mfoot}[1]{\mbox{{\footnotesize{#1}}}}
+\newcommand{\gfoot}[1]{\mbox{\footnotesize{#1}}}
+\newcommand{\mtin}[1]{\mbox{\tiny{#1}}}
+\newcommand{\paroxi}[1]{$#1\mtext{ m}^3/\mtext{s}$}
+\newcommand{\density}[1]{$#1\mtext{ kg/m}^3$}
+\newcommand{\densityr}[1]{$\rho=#1\mtext{ kg/m}^3$}
+\newcommand{\velocity}[1]{$#1\mtext{ m/s}$}
+\newcommand{\vel}[1]{$#1\mtext{ km/h}$}
+\newcommand{\velo}[1]{$#1\mtext{ mi/h}$}
+\newcommand{\accel}[1]{$#1\mtext{ m/s}^2$}
+\newcommand{\gwnia}[1]{$#1^{\circ}$}
+\newcommand{\rpm}[1]{$#1\mtext{ rpm}$}
+\newcommand{\rps}[1]{$#1\mtext{ rps}$}
+\newcommand{\hz}[1]{$#1\mtext{ Hz}$}
+\newcommand{\khz}[1]{$#1\mtext{ kHz}$}
+\newcommand{\mhz}[1]{$#1\mtext{ MHz}$}
+\newcommand{\ghz}[1]{$#1\mtext{ GHz}$}
+%\newcommand{\hz}[1]{$#1\mtext{ hz}$}
+\newcommand{\lb}[1]{$#1\mtext{ lb}$}
+\newcommand{\jl}[1]{$#1\mtext{ J}$}
+\newcommand{\volt}[1]{$#1\mtext{ V}$}
+\newcommand{\ampere}[1]{$#1\mtext{ A}$}
+\newcommand{\ohm}[1]{$#1\:\Omega$}
+\newcommand{\mampere}[1]{$#1\mtext{ mA}$}
+\newcommand{\mmampere}[1]{$#1\mbox{ μ}\mtext{ A}$}
+\newcommand{\htc}[1]{$#1\mtext{ W/m}^2\cdot\mtext{K}$}
+\newcommand{\efcon}[1]{$#1\mtext{ W/m}\cdot\mtext{K}$}
+\newcommand{\thres}[1]{$#1\mtext{ m}^2\mtext{KW}$}
+\newcommand{\db}[1]{$#1\mtext{ dB}$}
+\newcommand{\mol}[1]{$#1\mtext{ mol}$}
+\newcommand{\vbm}[1]{\vec{\bm{#1}}}
+\newcommand{\uvec}[1]{\hat{\bm{#1}}}
+\newcommand{\coul}[1]{$#1\mtext{ C}$}
+\newcommand{\tesla}[1]{$#1\mtext{ T}$}
+\newcommand{\watt}[1]{$#1\mtext{ W}$}
+\newcommand{\mcoul}[1]{$#1\mbox{ μ}\mtext{C}$}
+\newcommand{\cals}[1]{$#1\mtext{ cal}$}
+\newcommand{\kcal}[1]{$#1\mtext{ kcal}$}
+\newcommand{\sheat}[1]{$#1\mtext{ J}/\mtext{kg}\cdot\mtext{C}^{\circ}$}
+\newcommand{\mple}[1]{\blue{#1}\blackink}
+\newcommand{\mplebf}[1]{\mple{\textbf{#1}}}
+\def\kel{9,0\times 10^9\mtext{ N}\cdot\mtext{m}^2/\mtext{C}^2}
+\def\elec{1,6\times 10^{-19}\mtext{ C}}
+\def\melec{9,1\times 10^{-31}\mtext{ kg}}
+\def\ggrav{9,8\mtext{ m/s}^2}
+\def\ezero{8,85\times 10^{-12}\mtext{ C}^2/\mtext{N}\cdot\mtext{m}^2}
+\def\ezeron{9\times 10^{-12}\mtext{ C}^2/\mtext{N}\cdot\mtext{m}^2}
+\def\Red{\special{color Magenta}}
+\newcommand{\enunit}[2]{$#1\mtext{ #2}$}
+\newcommand{\volume}{\mathop{\ooalign{\hfil$V$\hfil\cr\kern0.08em--\hfil\cr}}\nolimits}
+\newcommand{\task}[1]{\noindent\highlight {#1}}
+\newcommand{\extask}[1]{\noindent\hlight {#1}}
+\newcommand{\figno}[1]{\color{figureTitleColor}{\textbf {Σχήμα} }\blackink\color{figureNumberColor}{\textbf {#1}}\blackink$\:\:$}
+\newcommand{\imno}[1]{\color{figureTitleColor}{\textbf {Εικόνα} }\blackink\color{figureNumberColor}{\textbf {#1}}\blackink$\:$}
+\newcommand{\citem}[1]{\color{itemizeColor1}{\textbf {#1}}}
+\def\enter{\vspace{\baselineskip}}
+
+\newcommand{\chapref}[1]{\textbf {\mple{\ref{#1}}}}     % chapter reference
+\newcommand{\sectref}[1]{\textbf {\mple{\ref{#1}}}}     % section reference
+\newcommand{\appref}[1]{\textbf {\mple{\ref{#1}}}}      % appendix reference
+\newcommand{\exampleref}[1]{\textbf {\mple{\ref{#1}}}}  % example reference
+\newcommand{\figref}[1]{\textbf {\mple{\ref{#1}}}}      % figure reference
+\newcommand{\tabref}[1]{\textbf {\mple{\ref{#1}}}}      % table reference
+\newcommand{\eqnref}[1]{\textbf {\mple{\ref{#1}}}}      % equation reference
+\newcommand{\probref}[1]{\textbf {\mple{\ref{#1}}}}     % problem reference
+\newcommand{\fnoteref}[1]{\textbf {\mple{\ref{#1}}}}    % footnote question reference
+
+%%%%%%% FOR REFERECE COMPARISON %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand\fbox{\fcolorbox{red}{yellow}}
+%\newcommand{\chapref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}     % chapter reference
+%\newcommand{\sectref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}     % section reference
+%\newcommand{\appref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}      % appendix reference
+%\newcommand{\exampleref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}  % example reference
+%\newcommand{\figref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}      % figure reference
+%\newcommand{\tabref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}      % table reference
+%\newcommand{\eqnref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}      % equation reference
+%\newcommand{\probref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}     % problem reference
+%\newcommand{\questref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}    % question reference
+%\newcommand{\mquestref}[1]{\fbox{\textbf {\mple{\ref{#1}}}}}   % misleading question reference
+
+% hfill in math mode
+
+\makeatletter
+\newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+\newcommand{\pushleft}[1]{\ifmeasuring@#1\else\omit$\displaystyle#1$\hfill\fi\ignorespaces}
+\makeatother
+
+\newcommand\Ground{%
+\mathbin{\text{\begin{tikzpicture}[circuit ee IEC,yscale=0.6,xscale=0.5]
+\draw (0,2ex) to (0,0) node[ground,rotate=-90,xshift=.65ex] {};
+\end{tikzpicture}}}%
+}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1.4pt] (char) {#1};}}
+
+\newenvironment{askisi}[1]
+{\mdfsetup{
+skipabove=\topsep,
+skipbelow=\topsep,
+innertopmargin=0pt,
+innerbottommargin=4pt,
+leftmargin=-13pt,
+splitbottomskip=0ex,
+splittopskip=0ex,
+topline=false,
+leftline=true,
+linewidth=4pt,
+bottomline=false,
+rightline=false,
+innerrightmargin=0pt,
+innerlinewidth=2pt,
+font=\normalfont,
+linecolor=Cyan,
+}
+\begin{mdframed}%
+}
+{\end{mdframed}}
+
+%\captionsetup[table]{name=\highlight{ΠΙΝΑΚΑΣ}}
+%\captionsetup[table]{labelsep=space}
+%\renewcommand\thetable{\highlight{\thechapter-\arabic{table}}\blackink}
+
+\usetikzlibrary{shapes.misc, positioning}
+\usetikzlibrary{decorations.text}
+
+\newcommand{\pSolving}[1]{
+\vspace{0.5cm}\noindent
+\begin{tikzpicture}
+\node [draw, rounded rectangle, rounded rectangle east arc=0pt] {\large\bfseries\mple{Επίλυση προβλημάτων #1}};
+\end{tikzpicture}}
+
+\tikzset{circuit declare symbol = ammeter}
+\tikzset{set ammeter graphic ={draw, generic circle IEC, minimum size=4mm,info=center:A}}
+\newcommand{\ammetersymbol}{
+\begin{tikzpicture}[circuit ee IEC]
+    \draw (0,0) to[ammeter] (1,0);
+  \end{tikzpicture}}
+
+\tikzset{circuit declare symbol = gvmeter}
+\tikzset{set gvmeter graphic ={draw, generic circle IEC, minimum size=4mm,info=center:{G}}}
+\newcommand{\gvmetersymbol}{
+\begin{tikzpicture}[circuit ee IEC]
+    \draw (0,0) to[gvmeter] (1,0);
+  \end{tikzpicture}}
+
+%\WarningFilter{mdframed}{mdframed works in twoside mode}
+%%\makeatletter
+%%\mdf@PackageWarning{mdframed works in twoside mode}
+%%\makeatother
+%\makeatletter
+%    \renewcommand*\mdf@PackageWarning[1]{}
+%\makeatother
+
+%\newcommand{\optionalsection}[1]{%
+%\renewcommand\thesection{*\arabic{chapter}.\arabic{section}}%
+%\section{#1}%
+%\renewcommand\thesection{\arabic{chapter}.\arabic{section}}%
+%}
+
+%\makeatletter
+%\renewcommand*{\numberline}[1]{%
+%  \hb@xt@\@tempdima{\hfil#1 }%
+%}
+%\makeatother
+
+%\setlength\cftsectionnumwidth{4em}
+
+\setlength{\cftsectionnumwidth}{3.5em}% Width of \section numbers in ToC
+\renewcommand{\cftsectionpresnum}{\hfill}% Inserted before \section numbers in ToC
+\renewcommand{\cftsectionaftersnum}{\quad}% Inserts after \section numbers in ToC
+
+\cftsetindents{section}{2.5em}{2.2em}
+
+
+\makeatletter
+\newcommand*{\greek}[1]{%
+  \expandafter\@greek\csname c@#1\endcsname
+}
+\newcommand*{\@greek}[1]{%
+  $\ifcase#1\or\alpha\or\beta\or\gamma\or\delta\or\varepsilon
+    \or\zeta\or\eta\or\theta\or\iota\or\kappa\or\lambda
+    \or\mu\or\nu\or\xi\or o\or\pi\or\varrho\or\sigma
+    \or\tau\or\upsilon\or\phi\or\chi\or\psi\or\omega
+    \else\@ctrerr\fi$
+}
+
+\renewenvironment{subequations}{%
+  \refstepcounter{equation}%
+  \protected@edef\theparentequation{\theequation}%
+  \setcounter{parentequation}{\value{equation}}%
+  \setcounter{equation}{0}%
+  \def\theequation{\theparentequation\greek{equation}}%
+  \ignorespaces
+}{%
+  \setcounter{equation}{\value{parentequation}}%
+  \ignorespacesafterend
+}
+\makeatother
+
+\definecolor{solid}{cmyk} {0, 0.05, 0.2, 0}    % problem frame box background color
+\newcommand{\cboxedeqn}[1]{\colorbox{solid}{$\:\:\displaystyle #1\:\:$}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% OPTIONAL SECTIONS AND RELATED TOC
+
+\NewDocumentCommand{\optionalSection}{O{#3}om}{%
+  \renewcommand{\thesection}{\optasterisk\standardthesection}%
+  \optzerotrue
+  \IfNoValueTF{#2}{\section[#1]{#3}}{\section[#1][#2]{#3}}%
+  \optzerofalse
+  \renewcommand{\thesection}{\standardthesection}%
+}
+\AtBeginDocument{\let\standardthesection\thesection}
+
+\NewDocumentCommand{\optasterisk}{}{%
+  %\ifoptzero\makebox[0pt][r]{*}\else*\fi
+  *%
+}
+\newif\ifoptzero
+
+%%%%%%%%%%%%%%%%%%%%% TOC
+
+\makeatletter
+\newcommand{\thesectionToC}{%
+  \thechapter.%
+  \ifnum\value{section}<10 \protect\phantom{.}\fi
+  \@arabic\c@section
+}
+
+\patchcmd
+  {\M@sect} % <cmd>
+  {\protect\numberline{\csname the#1\endcsname}} % <search>
+  {\ifnum\pdfstrcmp{#1}{section}=0
+     \protect\numberline{\ifoptzero\makebox[0pt][r]{*}\fi\csname the#1ToC\endcsname}
+   \else
+     \protect\numberline{\ifoptzero\makebox[0pt][r]{*}\fi\csname the#1\endcsname}
+   \fi} % <replace>
+  {}{}
+\makeatother
+
+% remove Contents from TOC
+\makeatletter
+\renewcommand*{\@tocmaketitle}{}
+\makeatother
+
+\newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\setlength{\headheight}{13.6pt}
+
+\DeclarePairedDelimiter\autobracket{(}{)}
+\newcommand{\br}[1]{\autobracket*{#1}}
+
+\newcommand{\ble}[1]{\Cyan{#1}\blackink}
+\newcommand{\mov}[1]{\baseColor{#1}\blackink}
+%\newcommand{\mple}[1]{\blue{#1}\blackink}
+\newcommand{\mpleb}[1]{\textbf {\blue{#1}}\blackink}
+
+% global settings for problem frame boxes  ------------------------------------------------------------------> BEGIN
+
+\definecolor{border}{rgb}{0,0,1}            % problem frame box border color
+%\definecolor{solid}{cmyk} {0.25, 0, 0, 0}    % problem frame box background color
+\definecolor{solid}{cmyk} {0, 0.05, 0.2, 0}    % problem frame box background color
+\def\no{\noindent}
+\def\vf{\vspace{.3cm}\no}
+\def\li{\vf\bf{\Cyan{\lg Λύση}}\blackink}
+\def\cb{\colorbox}
+\def\fcb{\fcolorbox}
+\def\fb{\vspace{.3cm}\no\fbox}
+\def\ffb{\vspace{.3cm}\no\fbox}
+\def\pb{\parbox{0.99\textwidth}}                   % the horizontal dimension of the frame box
+\def\ipb{\parbox{16.9cm}}                   % the horizontal dimension of the frame box in the itemize environment
+\def\pbb{\parbox}
+
+%\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newtcolorbox{solution}{
+    enhanced,
+    colback=gray!9,
+    colframe=teal!65!black,
+    boxrule=0.85pt,
+    arc=3pt,
+    left=2.5mm,
+    right=2.5mm,
+    top=2mm,
+    bottom=2.5mm,
+    before skip=6pt,
+    after skip=8pt,
+    breakable,
+    title={\faIcon{pencil-alt}\enspace \textbf {Λύση}},
+    fonttitle=\bfseries\large,
+    coltitle=white,
+    colbacktitle=teal!75!black,
+    fontupper=\small,
+}
+
+\newtcolorbox{thmproof}{
+    enhanced,
+    colback=blue!5,
+    colframe=blue!50!violet,
+    boxrule=0.9pt,
+    arc=3pt,
+    left=2.5mm,
+    right=2.5mm,
+    top=2mm,
+    bottom=2.5mm,
+    before skip=6pt,
+    after skip=8pt,
+    breakable,
+    title={\faIcon{check-square}\enspace \textbf{Απόδειξη:}},
+    fonttitle=\bfseries\large,
+    coltitle=white,
+    colbacktitle=blue!50!violet,
+    fontupper=\small,
+}
+
+%\newcounter{problem}[chapter]
+%\renewcommand{\theproblem}{\thesection.\arabic{problem}}
+%
+%\newtcolorbox{problem}[1][]{
+%    enhanced,
+%    colback=orange!7,
+%    colframe=orange!75!red,
+%    boxrule=0.9pt,
+%    arc=3pt,
+%    left=2.5mm,
+%    right=2.5mm,
+%    top=2mm,
+%    bottom=2.5mm,
+%    before skip=8pt,
+%    after skip=9pt,
+%    breakable,
+%    capture=minipage,
+%    before={\refstepcounter{problem}},
+%    title={\faIcon{file-alt}\enspace \textbf{Άσκηση~\theproblem} #1},
+%    fonttitle=\bfseries\large,
+%    coltitle=white,
+%    colbacktitle=orange!80!red,
+%    fontupper=\small,
+%}
+
+\newcommand{\QRbasePath}{./QRStuff/}
+
+\newcounter{problem}[section] % Άλλαξε σε section για να μηδενίζει σωστά
+\renewcommand{\theproblem}{\thesection.\arabic{problem}}
+
+\newtcolorbox{problem}[1][]{
+    enhanced,
+    code={\refstepcounter{problem}}, % Αυξάνει τον μετρητή ΠΡΙΝ επεξεργαστεί τα υπόλοιπα κλειδιά
+    colback=blue!5,
+    colframe=blue!75!black,
+    boxrule=0.9pt,
+    arc=3pt,
+    left=2.5mm,
+    right=2.5mm,
+    top=2mm,
+    bottom=2.5mm,
+    before skip=8pt,
+    after skip=9pt,
+    breakable,
+    capture=minipage,
+    title={\faIcon{file-alt}\enspace \textbf{Άσκηση~\theproblem} #1},
+    fonttitle=\bfseries\large,
+    coltitle=white,
+    colbacktitle=blue!80!red,
+    fontupper=\small,
+}
+
+%\makeatletter
+%\newcommand{\listofqrcodes}{%
+%  \section* {Κατάλογος QR Υλικού}
+%  \addcontentsline{toc}{section}{Κατάλογος QR Υλικού}
+%  \@starttoc{qrc}%
+%}
+%\makeatother
+
+\NewDocumentEnvironment{qrproblem}{m m}
+{
+    \refstepcounter{problem}
+
+    %========================
+    % QR LIST ENTRY
+    %========================
+    \qr@add{Άσκηση~\theproblem\ — #2}
+
+    \begin{tcolorbox}[
+        enhanced,
+        breakable,
+        colback=blue!5,
+        colframe=blue!75!black,
+        boxrule=0.9pt,
+        arc=3pt,
+        left=2.5mm,
+        right=2.5mm,
+        top=2mm,
+        bottom=2.5mm,
+        before skip=8pt,
+        after skip=9pt,
+        title={\faIcon{file-alt}\enspace \textbf{Άσκηση~\theproblem}},
+        fonttitle=\bfseries\large,
+        coltitle=white,
+        colbacktitle=blue!80!red,
+        fontupper=\small,
+        sidebyside,
+        sidebyside align=top,
+        lefthand ratio=0.87,
+        sidebyside gap=2mm,
+        segmentation hidden
+    ]
+}
+{
+    \tcblower
+    \flushright
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=gray!70,
+        arc=2pt,
+        boxrule=0.5pt,
+        halign=center,
+        top=1mm,
+        bottom=1mm,
+        left=1mm,
+        right=1mm,
+        width=2.0cm
+    ]
+    \qrcode[height=1.5cm]{#1}
+    \end{tcolorbox}
+    \end{tcolorbox}
+}
+
+\newcommand{\listresname}{Λίστα Πηγών Ασκήσεων}
+\newlistof{qresource}{qrs}{\listresname}
+
+% 2. Επειδή το \listofqresource σας βγάζει σφάλμα,
+% την ορίζουμε χειροκίνητα εδώ, συνδεδεμένη με το αρχείο .qrs
+\makeatletter
+\newcommand{\listofqresource}{%
+    \section*{\listresname}%
+    \@starttoc{qrs}%
+}
+\makeatother
+
+%===================================================================
+% Βοηθητικός Μηχανισμός Επιλογής Εικονιδίου & Χρώματος
+%===================================================================
+\newcommand{\getAppIcon}[1]{%
+    \edef\arg{#1}%
+    \ifx\arg\stringpdf\color{red!80!black}\faIcon{file-pdf}\else
+    \ifx\arg\stringjpg\color{green!60!black}\faIcon{file-image}\else
+    %--- ΕΔΩ ΜΠΑΙΝΕΙ ΤΟ ΠΡΑΓΜΑΤΙΚΟ LOGO ΤΟΥ MATLAB ---
+    \ifx\arg\stringmatlab\includegraphics[height=1.1cm]{Matlab_logo.png}\else
+    \ifx\arg\stringjupyter\includegraphics[height=1.1cm]{jupyter-logo.png}\else
+    \ifx\arg\stringpython\color{blue!70!cyan}\faIcon{python}\else
+    \ifx\arg\stringtxt\color{gray!80!black}\faIcon{file-alt}\else
+    \ifx\arg\stringvideo\color{purple!80!black}\faIcon{video}\else
+    \color{black}\faIcon{file}% Default
+    \fi\fi\fi\fi\fi\fi\fi
+}
+\def\stringpdf{pdf}\def\stringjpg{jpg}\def\stringmatlab{matlab}
+\def\stringpython{python}\def\stringtxt{txt}\def\stringvideo{video}
+\def\stringjupyter{jupyter}
+
+% 3. ΟΡΙΖΟΝΤΙΑ ΕΚΔΟΣΗ
+\NewDocumentEnvironment{qrStuffHoriz}{m m}
+{
+    % Εγγραφή στη λίστα
+    \addcontentsline{qrs}{section}{\makebox[2.5cm][l]{Άσκηση $\Rightarrow$ \theproblem} Τύπος αρχείου: #1}
+    \begin{tcolorbox}[
+        enhanced, baseline=0pt,
+        colback=white, colframe=gray!60,
+        arc=3pt, boxrule=0.5pt,
+        halign=center, valign=center,
+        before upper=\vspace*{0pt},
+        box align = top,
+        % --- ΕΔΩ ΕΙΝΑΙ ΟΙ ΑΛΛΑΓΕΣ ---
+        top=1mm, bottom=1mm, left=1mm, right=1mm, % Μειώσαμε τα περιθώρια
+        width=2.5cm, % Μειώσαμε το συνολικό πλάτος
+        boxsep=0pt,  % Αφαιρεί το επιπλέον κενό που προσθέτει το tcolorbox
+        nobeforeafter
+    ]
+    \begin{minipage}[c]{0.45\linewidth}
+        \centering \resizebox{!}{0.8cm}{\getAppIcon{#1}}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.45\linewidth}
+        \centering \qrcode[height=0.9cm]{#2}
+    \end{minipage}
+}
+{\end{tcolorbox}}
+
+% 4. ΚΑΤΑΚΟΡΥΦΗ ΕΚΔΟΣΗ
+\NewDocumentEnvironment{qrStuffVert}{m m}
+{
+    % Εγγραφή στη λίστα
+    \addcontentsline{qrs}{qresource}{\protect\numberline{\theproblem} #1}
+    \begin{tcolorbox}[enhanced, colback=white, colframe=gray!60, arc=3pt, boxrule=0.5pt,
+        halign=center, width=1.6cm, nobeforeafter]
+    \getAppIcon{#1}
+    \vspace{2mm}
+    \qrcode[height=1.1cm]{#2}
+}
+{\end{tcolorbox}}
+
+\graphicspath{{../../../Figures/PDF/Chapter01}}
+
+\begin{document}
+
+%\pagestyle{mystyle}
+\pagestyle{empty}
+
+%\makeevenhead{mystyle}{{\large{\color{evenPageColor}{\textbf{\thepage}}}}$\ \ \ \ $ \color{evenTextColor}{\large ΠΕΡΙΕΧΟΜΕΝΑ}}{}{}
+%\makeoddhead{mystyle}{}{}{{\large{\color{oddPageColor}{\textbf{\thepage}}}}$\ \ \ \ $ \color{oddTextColor}{\large ΠΕΡΙΕΧΟΜΕΝΑ}}
+
+\paragraph {Άσκηση 1-3.5}~\medskip
+
+%\begin{problem}
+%Να βρεθεί η θεμελιώδης περίοδος του σήματος $x(t)=\cos(15\pi t)+3\sin(8\pi t)$.
+%\label{prob010305}
+%\end{problem}
+
+\begin{solution}
+Εάν $T$ είναι η περίοδος του σήματος $x(t)$, τότε θα ισχύει η συνθήκη περιοδικότητας $x(t)=x(t+T)$ όπου το σήμα $x(t+T)$ σύμφωνα με τον ορισμό του σήματος $x(t)$, ορίζεται ως
+\begin{equation*}
+x(t+T)=\cos[15\pi(t+T)]+3\sin[8\pi(t+T)]=\cos(15\pi t+15\pi T)+3\sin(8\pi t+8\pi T)
+\end{equation*}
+Λαμβάνοντας υπόψη πως οι περίοδοι των δύο ημιτονοειδών σημάτων είναι της μορφής $T_1=2\pi m$ και $T_2=2\pi n$, η συνθήκη περιοδικότητας ικανοποιείται εάν είναι
+\begin{equation*}
+15\pi T=2\pi m\quad\mbox{και}\quad 8\pi T=2\pi n
+\end{equation*}
+από όπου προκύπτει ότι\footnote{Στη γενική περίπτωση δύο περιοδικών σημάτων $x(t)$ και $y(t)$ με τιμές περιόδων $T_1$ και $T_2$ το άθροισμα των δύο σημάτων $z(t)=x(t)+y(t)$ είναι περιοδικό σήμα με περίοδο $T$, εάν ισχύει η σχέση $T=mT_1=nT_2$ από όπου προκύπτει ότι $T_1/T_2=n/m$. Επομένως, η ιδιότητα της περιοδικότητας για το σήμα $z(t)$ διασφαλίζεται, όταν ο λόγος των περιόδων των δύο σημάτων είναι ρητός αριθμός - δηλαδή μπορεί να εκφραστεί ως το πηλίκο δύο ακεραίων - ενώ στην αντίθετη περίπτωση το σήμα $z(t)$ δεν είναι περιοδικό.}
+\begin{equation*}
+T=\frac{2m}{15}=\frac{n}{4}\quad\mbox{ή ισοδύναμα}\quad\frac{n}{m}=\frac{8}{15}
+\end{equation*}
+Αλλά οι δύο παραπάνω αριθμοί δεν διαθέτουν κάποιο κοινό διαιρέτη; θα είναι, λοιπόν, $n=8$ και $m=15$ από όπου προκύπτει ότι $T=n/2=4$.
+\end{solution}
+
+\end{document} 
